@@ -17,3 +17,14 @@ typedef struct No {
 typedef struct {
     No *inicio;     
 } Lista;
+
+No* buscar_produto(const Lista *l, int codigo) {
+    No *atual = l->inicio;
+    while (atual != NULL) {
+        if (atual->produto.codigo == codigo) {
+            return atual; // Encontrou o produto
+        }
+        atual = atual->prox;
+    }
+    return NULL;
+}
