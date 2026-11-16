@@ -2,25 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define TAM_NOME 151
-
-typedef struct {
-    int codigo;
-    char nome[TAM_NOME];
-    int quantidade;
-    double preco;
-} Produto;
-
-/* cada no guarda um produto e aponta para o proximo no */
-typedef struct No {
-    Produto produto;
-    struct No *prox;
-} No;
-
-typedef struct {
-    No *inicio;     /* lista vazia */
-} Lista;
+#include "projeto-lista-produtos/src/lista.h"
 
 #define CADASTRO_OK            0
 #define CADASTRO_NOME_INVALIDO 1
