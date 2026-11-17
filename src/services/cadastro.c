@@ -110,24 +110,7 @@ void listar_produtos(const Lista *l) {
         
         atual = atual->prox;
     }
-}
-
-/* le uma linha inteira (aceita espacos) sem o '\n' */
-static void ler_linha(const char *pergunta, char *destino, int tamanho) {
-    printf("%s", pergunta);
-    if (fgets(destino, tamanho, stdin) == NULL) {
-        destino[0] = '\0';
-        return;
-    }
-    size_t len = strlen(destino);
-    if (len > 0 && destino[len - 1] == '\n') {
-        destino[len - 1] = '\0';
-    } else {
-        int c;                    /* linha maior que o vetor descarta o resto */
-        while ((c = getchar()) != '\n' && c != EOF) {
-        }
-    }
-}
+};
 
 /* pede os dados ao usuario e cadastra */
 static void cadastrar_pelo_teclado(Lista *l) {
@@ -163,18 +146,5 @@ static void cadastrar_pelo_teclado(Lista *l) {
 }
 
 int main(void) {
-    Lista lista;
-    char resposta[20];
-
-    iniciar_lista(&lista);
-
-    do {
-        cadastrar_pelo_teclado(&lista);
-        ler_linha("\nCadastrar outro produto? (s/n): ", resposta, sizeof resposta);
-    } while (resposta[0] == 's' || resposta[0] == 'S');
-
-    listar_produtos(&lista);
-
-    liberar_lista(&lista);
-    return 0;
+   
 }

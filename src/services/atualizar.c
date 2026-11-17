@@ -4,7 +4,7 @@
 #include "busca.h"
 
 int atualizar_produto(Lista *l, int codigo, Produto *novo_produto) {
-    Produto* produto = buscar_produto(l, codigo);
+    Produto *produto = buscar_produto(l, codigo);
     
     if (produto == NULL) {
         return 0;

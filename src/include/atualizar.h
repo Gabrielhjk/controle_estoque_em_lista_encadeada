@@ -1,5 +1,5 @@
 #pragma once
 #include "lista.h"
 
-int atualizar_produto(Lista *l, int codigo, Produto Produto);
+int atualizar_produto(Lista *l, int codigo, Produto *novo_produto);
 
