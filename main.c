@@ -28,7 +28,7 @@ int main() {
             printf("Código do Produto: \n");
             if(scanf("%d", &produto.codigo) != 1) break;
             
-            if(buscar_produto(*inicio, produto.codigo) != NULL) {
+            if(buscar_produto(inicio, produto.codigo) != NULL) {
                 printf("Código do Produto já está cadastrado");
                 break;
             }
