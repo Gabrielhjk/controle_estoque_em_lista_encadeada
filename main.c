@@ -21,7 +21,7 @@ int main() {
         printf("6 - Sair do Sistema\n");
        
         printf("O que você gostaria de fazer? (digite um número correspondente a opção)\n");
-        if(scanf("%d, &opcao") != 1) break;
+        if(scanf("%d", &opcao) != 1) break;
 
         switch (opcao) {
         case 1:
@@ -37,12 +37,12 @@ int main() {
             if(scanf(" %50[^\n]", produto.nome) != 1) break;
             
             printf("Preço do Produto: \n");
-            if(scanf("%f", produto.preco) != 1) break;
+            if(scanf("%lf", &produto.preco) != 1) break;
             
             printf("Quantidade do Produto: \n");
-            if(scanf("%d", produto.quantidade) != 1) break;
+            if(scanf("%d", &produto.quantidade) != 1) break;
     
-            if(cadastrar_produto(&inicio, produto)) {
+            if(cadastrar_produto(inicio, produto)) {
                 printf("Produto Cadastrado com Sucesso!\n");
             } else {
                 printf("Erro na Memória!\n");
@@ -52,9 +52,9 @@ int main() {
             break;
         case 3:
             printf("Qual Produto você Gostaria de Visualizar? (Digite o Código)\n");
-            codigo = scanf("%f", produto.codigo);
+            codigo = scanf("%d", &produto.codigo);
             if(buscar_produto(inicio, codigo)) {
-                listar_produto(inicio, codigo);
+                listar_produto(&inicio, codigo);
             } else {
                 printf("Produto Não Encontrado!");
             };

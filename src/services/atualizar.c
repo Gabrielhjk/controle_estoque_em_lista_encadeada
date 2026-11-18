@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-#include "./src/include/atualizar.h"
-#include "./src/include/busca.h"
+#include "../include/atualizar.h"
+#include "../include/busca.h"
 
 int atualizar_produto(No *inicio, int codigo, Produto *novo_produto) {
     Produto *produto = buscar_produto(inicio, codigo);

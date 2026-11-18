@@ -2,6 +2,6 @@
 #define REMOVER_H
 #include "lista.h"
 
-int remover(Lista *l, int codigo);
+int remover(No *inicio, int codigo);
 
 #endif

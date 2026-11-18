@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./src/include/remover.h"
+#include "../include/remover.h"
 
 // Remove um produto pelo codigo
 int remover(No *inicio, int codigo) {
