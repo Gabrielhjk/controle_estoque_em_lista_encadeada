@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cadastro.h"
-#include "busca.h"
-#include "remover.h"
-#include "atualizar.h"
+#include "src/include/cadastro.h"
+#include "src/include/busca.h"
+#include "src/include/remover.h"
+#include "src/include/atualizar.h"
 
 int main() {
     No *inicio = NULL;

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lista.h"
+#include "./src/include/lista.h"
 
 #define CADASTRO_OK            0
 #define CADASTRO_NOME_INVALIDO 1

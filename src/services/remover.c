@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "remover.h"
+#include "./src/include/remover.h"
 
 // Remove um produto pelo codigo
-int remover(Lista *l, int codigo) {
-    No *atual = l->inicio;
+int remover(No *inicio, int codigo) {
+    No *atual = inicio;
     No *anterior = NULL;
 
     while (atual != NULL &&
@@ -19,7 +19,7 @@ int remover(Lista *l, int codigo) {
     }
 
     if (anterior == NULL) {
-        l->inicio = atual->prox;
+        inicio = atual->prox;
     } else {
         anterior->prox = atual->prox;
     }

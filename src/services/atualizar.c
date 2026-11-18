@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "atualizar.h"
-#include "busca.h"
+#include "./src/include/atualizar.h"
+#include "./src/include/busca.h"
 
-int atualizar_produto(Lista *l, int codigo, Produto *novo_produto) {
-    Produto *produto = buscar_produto(l, codigo);
+int atualizar_produto(No *inicio, int codigo, Produto *novo_produto) {
+    Produto *produto = buscar_produto(inicio, codigo);
     
     if (produto == NULL) {
         return 0;
