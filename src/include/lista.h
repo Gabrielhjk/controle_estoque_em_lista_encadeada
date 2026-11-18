@@ -16,8 +16,4 @@ typedef struct No {
     struct No *prox;
 } No;
 
-typedef struct {
-    No *inicio;     /* lista vazia */
-} Lista;
-
 #endif

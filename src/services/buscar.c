@@ -14,12 +14,9 @@ typedef struct No {
     struct No *prox;
 } No;
 
-typedef struct {
-    No *inicio;     
-} Lista;
 
-No* buscar_produto(const Lista *l, int codigo) {
-    No *atual = l->inicio;
+No* buscar_produto(No *inicio, int codigo) {
+    No *atual = inicio;
     while (atual != NULL) {
         if (atual->produto.codigo == codigo) {
             return atual; // Encontrou o produto
@@ -28,3 +25,18 @@ No* buscar_produto(const Lista *l, int codigo) {
     }
     return NULL;
 }
+
+void listar_produto(No **inicio, int codigo) {
+    No *atual = *inicio;
+    printf("\nProduto do Código \n", codigo);
+
+    if (atual == NULL) {
+        printf("Nenhum produto cadastrado.\n");
+        return;
+    }
+
+    printf("\ncodigo: %d\n", atual->produto.codigo);
+    printf("nome: %s\n", atual->produto.nome);
+    printf("quantidade: %d\n", atual->produto.quantidade);
+    printf("preco: %.2f\n", atual->produto.preco);      
+};

@@ -2,39 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define TAM_NOME 151
-
-typedef struct {
-    int codigo;
-    char nome[TAM_NOME];
-    int quantidade;
-    double preco;
-} Produto;
-
-/* cada no guarda um produto e aponta para o proximo no */
-typedef struct No {
-    Produto produto;
-    struct No *prox;
-} No;
-
-typedef struct {
-    No *inicio;     /* lista vazia */
-} Lista;
+#include "lista.h"
 
 #define CADASTRO_OK            0
 #define CADASTRO_NOME_INVALIDO 1
 #define CADASTRO_SEM_MEMORIA   2
 
-void iniciar_lista(Lista *l) {
-    l->inicio = NULL;
-}
-
 /* confere se o nome e apenas texto */
-static int nome_e_texto(const char *nome) {
+static int nome_e_texto(char *nome) {
     int tem_letra = 0;
 
-    for (const char *c = nome; *c != '\0'; c++) {
+    for (char *c = nome; *c != '\0'; c++) {
         unsigned char ch = (unsigned char) *c;
 
         if (isalpha(ch) || ch >= 128) {     /* letra acentuada */
@@ -46,16 +24,15 @@ static int nome_e_texto(const char *nome) {
     return tem_letra;
 }
 
-/* cadastra um produto no fim da lista */
-int cadastrar_produto(Lista *l, int codigo, const char *nome,
-                      int quantidade, double preco) {
+/* cadastra um produto no fim da No */
+int cadastrar_produto(No *inicio, Produto produto) {
 
     /* o nome so aceita texto */
-    if (!nome_e_texto(nome)) return CADASTRO_NOME_INVALIDO;
+    if (!nome_e_texto(produto.nome)) return CADASTRO_NOME_INVALIDO;
 
-    /* percorre a lista e guarda o ultimo no */
+    /* percorre a No e guarda o ultimo no */
     No *ultimo = NULL;
-    No *atual = l->inicio;
+    No *atual = inicio;
     while (atual != NULL) {
         ultimo = atual;
         atual = atual->prox;
@@ -65,16 +42,16 @@ int cadastrar_produto(Lista *l, int codigo, const char *nome,
     No *novo = (No *) malloc(sizeof(No));
     if (novo == NULL) return CADASTRO_SEM_MEMORIA;
 
-    novo->produto.codigo = codigo;
-    strncpy(novo->produto.nome, nome, TAM_NOME - 1);   /* copia no maximo 150 caracteres */
+    novo->produto.codigo = produto.codigo;
+    strncpy(novo->produto.nome, produto.nome, TAM_NOME - 1);   /* copia no maximo 150 caracteres */
     novo->produto.nome[TAM_NOME - 1] = '\0';           /* garante o fim da string */
-    novo->produto.quantidade = quantidade;
-    novo->produto.preco = preco;
+    novo->produto.quantidade = produto.quantidade;
+    novo->produto.preco = produto.preco;
     novo->prox = NULL;
 
-    /* liga o novo no na lista */
+    /* liga o novo no na No */
     if (ultimo == NULL) {
-        l->inicio = novo;           /* o novo vira o primeiro */
+        inicio = novo;           /* o novo vira o primeiro */
     } else {
         ultimo->prox = novo;        /* o ultimo antigo aponta para o novo */
     }
@@ -82,26 +59,26 @@ int cadastrar_produto(Lista *l, int codigo, const char *nome,
     return CADASTRO_OK;
 }
 
-void liberar_lista(Lista *l) {
-    No *atual = l->inicio;
+void liberar_no(No *inicio) {
+    No *atual = inicio;
     while (atual != NULL) {
         No *proximo = atual->prox;
         free(atual);
         atual = proximo;
     }
-    l->inicio = NULL;
+    inicio = NULL;
 }
 
-/* mostra todos os produtos da lista */
-void listar_produtos(const Lista *l) {
+/* mostra todos os produtos da No */
+void listar_produtos(No **inicio) {
+    No *atual = *inicio;
     printf("\nProdutos cadastrados\n");
 
-    if (l->inicio == NULL) {
+    if (atual == NULL) {
         printf("Nenhum produto cadastrado.\n");
         return;
     }
 
-    No *atual = l->inicio;
     while (atual != NULL) {
         printf("\ncodigo: %d\n", atual->produto.codigo);
         printf("nome: %s\n", atual->produto.nome);
@@ -111,40 +88,3 @@ void listar_produtos(const Lista *l) {
         atual = atual->prox;
     }
 };
-
-/* pede os dados ao usuario e cadastra */
-static void cadastrar_pelo_teclado(Lista *l) {
-    char linha[200];
-    char nome[TAM_NOME];
-    int codigo = 0, quantidade = 0;
-    double preco = 0;
-
-    printf("\nCadastrar produto \n");
-
-    ler_linha("Codigo: ", linha, sizeof linha);
-    sscanf(linha, "%d", &codigo);
-
-    ler_linha("Nome: ", nome, sizeof nome);
-
-    ler_linha("Quantidade: ", linha, sizeof linha);
-    sscanf(linha, "%d", &quantidade);
-
-    ler_linha("Preço: ", linha, sizeof linha);
-    sscanf(linha, "%lf", &preco);
-
-    switch (cadastrar_produto(l, codigo, nome, quantidade, preco)) {
-        case CADASTRO_OK:
-            printf("Produto cadastrado com sucesso!\n");
-            break;
-        case CADASTRO_NOME_INVALIDO:
-            printf("Nome invalido: use apenas letras.\n");
-            break;
-        default:
-            printf("Sem memoria para cadastrar.\n");
-            break;
-    }
-}
-
-int main(void) {
-   
-}
