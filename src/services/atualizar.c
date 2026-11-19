@@ -16,8 +16,7 @@ int atualizar_produto(No *inicio, int codigo, Produto *novo_produto) {
         return 0;
     }
 
-    strncpy(no->produto.nome, novo_produto->nome, TAM_NOME - 1);
-    no->produto.nome[TAM_NOME - 1] = '\0';
+    strcpy(no->produto.nome, novo_produto->nome);
     no->produto.quantidade = novo_produto->quantidade;
     no->produto.preco = novo_produto->preco;
 
