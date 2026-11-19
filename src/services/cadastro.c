@@ -2,17 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/lista.h"
+#include "../include/cadastro.h"
 
-#define CADASTRO_OK            0
-#define CADASTRO_NOME_INVALIDO 1
-#define CADASTRO_SEM_MEMORIA   2
 
 /* confere se o nome e apenas texto */
-static int nome_e_texto(char *nome) {
+int nome_e_texto(const char *nome) {
     int tem_letra = 0;
 
-    for (char *c = nome; *c != '\0'; c++) {
+    for (const char *c = nome; *c != '\0'; c++) {
         unsigned char ch = (unsigned char) *c;
 
         if (isalpha(ch) || ch >= 128) {     /* letra acentuada */
@@ -25,14 +22,14 @@ static int nome_e_texto(char *nome) {
 }
 
 /* cadastra um produto no fim da No */
-int cadastrar_produto(No *inicio, Produto produto) {
+int cadastrar_produto(No **inicio, Produto produto) {
 
     /* o nome so aceita texto */
     if (!nome_e_texto(produto.nome)) return CADASTRO_NOME_INVALIDO;
 
     /* percorre a No e guarda o ultimo no */
     No *ultimo = NULL;
-    No *atual = inicio;
+    No *atual = *inicio;
     while (atual != NULL) {
         ultimo = atual;
         atual = atual->prox;
@@ -51,7 +48,7 @@ int cadastrar_produto(No *inicio, Produto produto) {
 
     /* liga o novo no na No */
     if (ultimo == NULL) {
-        inicio = novo;           /* o novo vira o primeiro */
+        *inicio = novo;           /* o novo vira o primeiro */
     } else {
         ultimo->prox = novo;        /* o ultimo antigo aponta para o novo */
     }
@@ -59,19 +56,19 @@ int cadastrar_produto(No *inicio, Produto produto) {
     return CADASTRO_OK;
 }
 
-void liberar_no(No *inicio) {
-    No *atual = inicio;
+void liberar_no(No **inicio) {
+    No *atual = *inicio;
     while (atual != NULL) {
         No *proximo = atual->prox;
         free(atual);
         atual = proximo;
     }
-    inicio = NULL;
+    *inicio = NULL;
 }
 
 /* mostra todos os produtos da No */
-void listar_produtos(No **inicio) {
-    No *atual = *inicio;
+void listar_produtos(No *inicio) {
+    No *atual = inicio;
     printf("\nProdutos cadastrados\n");
 
     if (atual == NULL) {
@@ -87,4 +84,4 @@ void listar_produtos(No **inicio) {
         
         atual = atual->prox;
     }
-};
+}

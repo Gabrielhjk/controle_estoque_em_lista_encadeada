@@ -3,8 +3,8 @@
 #include "../include/remover.h"
 
 // Remove um produto pelo codigo
-int remover(No *inicio, int codigo) {
-    No *atual = inicio;
+int remover(No **inicio, int codigo) {
+    No *atual = *inicio;
     No *anterior = NULL;
 
     while (atual != NULL &&
@@ -19,7 +19,7 @@ int remover(No *inicio, int codigo) {
     }
 
     if (anterior == NULL) {
-        inicio = atual->prox;
+        *inicio = atual->prox;
     } else {
         anterior->prox = atual->prox;
     }

@@ -1,21 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include "../include/busca.h"
 
-// Estruturas necessárias para a função de busca reconhecer o tipo de dado
-typedef struct {
-    int codigo;
-    char nome[151];
-    int quantidade;
-    double preco;
-} Produto;
-
-typedef struct No {
-    Produto produto;
-    struct No *prox;
-} No;
-
-
-No* buscar_produto(No **inicio, int codigo) {
+No* buscar_produto(No *inicio, int codigo) {
     No *atual = inicio;
     while (atual != NULL) {
         if (atual->produto.codigo == codigo) {
@@ -27,15 +13,15 @@ No* buscar_produto(No **inicio, int codigo) {
 }
 
 void listar_produto(No *inicio, int codigo) {
-    No *atual = inicio;
+    No *no = buscar_produto(inicio, codigo);
 
-    if (atual == NULL) {
-        printf("Nenhum produto cadastrado.\n");
+    if (no == NULL) {
+        printf("Produto não encontrado!\n");
         return;
     }
 
-    printf("\ncodigo: %d\n", atual->produto.codigo);
-    printf("nome: %s\n", atual->produto.nome);
-    printf("quantidade: %d\n", atual->produto.quantidade);
-    printf("preco: %.2f\n", atual->produto.preco);      
-};
+    printf("\nCodigo: %d\n", no->produto.codigo);
+    printf("Nome: %s\n", no->produto.nome);
+    printf("Quantidade: %d\n", no->produto.quantidade);
+    printf("Preço: %.2f\n", no->produto.preco);
+} 
